@@ -1,0 +1,10 @@
+.git
+node_modules
+.env
+.development.env
+.production.env
+.DS_Store
+logfile
+dist
+out
+combinedlog

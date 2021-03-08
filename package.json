@@ -1,0 +1,75 @@
+{
+  "name": "bits_stack",
+  "version": "0.0.1",
+  "scripts": {
+    "server:dev": "tsc --project './tsconfig.json' --watch & NODE_ENV=development nodemon out/main.js",
+    "server:prod": "tsc --project './tsconfig.json' --watch & NODE_ENV=production node out/main.js",
+    "server:compile": "tsc --project './tsconfig.json'",
+    "server:build": "webpack --config ./build/bitstack.webpack.config.js",
+    "server:run": "webpack --config ./build/bitstack.webpack.config.js --watch",
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "lint:fix": "eslint . --ext .ts --ext .tsx --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint:fix"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "^7.6.12",
+    "@nestjs/core": "^7.6.12",
+    "@nestjs/platform-express": "^7.6.12",
+    "@types/bluebird": "^3.5.33",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "generic-pool": "^3.7.1",
+    "http-errors": "^1.8.0",
+    "inversify": "^5.0.5",
+    "ioredis": "^4.22.0",
+    "morgan": "^1.10.0",
+    "parent-module": "^2.0.0",
+    "pg": "^8.5.1",
+    "redis": "^3.0.2",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.6.3",
+    "typeorm": "^0.2.31",
+    "typeorm-transactional-cls-hooked": "^0.1.20",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.11",
+    "@types/generic-pool": "^3.1.9",
+    "@types/ioredis": "^4.19.4",
+    "@types/jest": "^26.0.20",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.27",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.19.0",
+    "fork-ts-checker-webpack-plugin": "^6.1.0",
+    "husky": "^4.2.5",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.2.2",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.0.5",
+    "ts-loader": "^8.0.17",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-shell-plugin-next": "^2.1.1"
+  }
+}

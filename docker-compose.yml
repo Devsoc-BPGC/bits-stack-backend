@@ -11,6 +11,8 @@ services:
         volumes:
           - ./:/usr/src/app/
           - /usr/src/app/node_modules
+        depends_on:
+          - postgres
     postgres:
         container_name: postgres
         image: postgres:12

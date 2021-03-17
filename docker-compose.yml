@@ -11,3 +11,21 @@ services:
         volumes:
           - ./:/usr/src/app/
           - /usr/src/app/node_modules
+    postgres:
+        container_name: postgres
+        image: postgres:12
+        networks:
+          - webnet
+        environment:
+          POSTGRES_PASSWORD: eatsleepcode
+          POSTGRES_USER: postgres
+          POSTGRES_DB: bitstack
+          PG_DATA: /var/lib/postgresql/data
+        ports:
+          - 5432:5432
+        volumes:
+          - pgdata:/var/lib/postgresql/data    
+networks:
+  webnet:       
+volumes:
+  pgdata:      

@@ -2,9 +2,9 @@ version: "3.9"
 services:
     bits-stack-backend:
         container_name: bits-stack-backend
-        image: bits-stack-backend
-        restart: always
-        command: npm start
+        #image: bits-stack-backend
+        #restart: always
+        command: npm run server:dev
         build: .
         ports:
           - 5000:5000
@@ -12,13 +12,9 @@ services:
           - ./:/usr/src/app/
           - /usr/src/app/node_modules
         networks:
-          - webnet   
-        links:
-          - postgres                 
+          - webnet                  
         depends_on:
-          - postgres
-        environment: 
-          DATABASE_URL: postgres://postgres:eatsleepcode@database:5432/webnet   
+          - postgres 
         working_dir: /usr/src/app                  
     postgres:
         container_name: postgres

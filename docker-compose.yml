@@ -7,10 +7,12 @@ services:
         command: npm start
         build: .
         ports:
-          - "5000:5000"
+          - 5000:5000
         volumes:
           - ./:/usr/src/app/
           - /usr/src/app/node_modules
+        networks:
+          - webnet          
         depends_on:
           - postgres
     postgres:
@@ -19,9 +21,11 @@ services:
         networks:
           - webnet
         environment:
+          #here variable are used to createdefault DB for bitstack
           POSTGRES_PASSWORD: eatsleepcode
           POSTGRES_USER: postgres
           POSTGRES_DB: bitstack
+          # here it'll keep al psql data of bitstack
           PG_DATA: /var/lib/postgresql/data
         ports:
           - 5432:5432

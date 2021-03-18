@@ -12,9 +12,14 @@ services:
           - ./:/usr/src/app/
           - /usr/src/app/node_modules
         networks:
-          - webnet          
+          - webnet   
+        links:
+          - postgres                 
         depends_on:
           - postgres
+        environment: 
+          DATABASE_URL: postgres://postgres:eatsleepcode@database:5432/webnet   
+        working_dir: /usr/src/app                  
     postgres:
         container_name: postgres
         image: postgres:12

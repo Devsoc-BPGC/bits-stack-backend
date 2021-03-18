@@ -8,7 +8,8 @@
     "server:build": "webpack --config ./build/bitstack.webpack.config.js",
     "server:run": "webpack --config ./build/bitstack.webpack.config.js --watch",
     "lint": "eslint . --ext .ts --ext .tsx",
-    "lint:fix": "eslint . --ext .ts --ext .tsx --fix"
+    "lint:fix": "eslint . --ext .ts --ext .tsx --fix",
+    "start": "ts-node src/main.ts"
   },
   "husky": {
     "hooks": {

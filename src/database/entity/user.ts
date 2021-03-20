@@ -10,7 +10,8 @@ import {
 	UpdateDateColumn,
 	ManyToMany,
 	BaseEntity,
-	OneToMany
+	OneToMany,
+	DeleteDateColumn
 } from 'typeorm';
 
 export enum UserRole {
@@ -30,6 +31,9 @@ export class Users extends BaseEntity {
 	@Column({ type: 'varchar', unique: true })
 	email!: string;
 
+	@Column({ type: 'varchar', unique: true })
+	roll_number!: string;
+
 	@Column({ type: 'text', nullable: true, default: '' })
 	avatar_url?: string;
 
@@ -38,11 +42,17 @@ export class Users extends BaseEntity {
 		enum: UserRole,
 		default: UserRole.POPO
 	})
-	org_role?: UserRole;
+	user_role?: UserRole;
 
 	@CreateDateColumn()
 	created_at?: Date;
 
 	@UpdateDateColumn()
 	updated_at?: Date;
+
+	@DeleteDateColumn()
+	deleted_at?: Date;
+
+	@Column({ type: 'text', nullable: true, default: '' })
+	about?: string;
 }

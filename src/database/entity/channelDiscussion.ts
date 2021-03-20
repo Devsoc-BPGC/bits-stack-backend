@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 
-@Entity({name: 'channels'})
+@Entity({name: 'channelDiscussions'})
 export class Channels {
 
 	@PrimaryGeneratedColumn({ type:'int'})

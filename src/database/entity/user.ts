@@ -23,7 +23,7 @@ export enum UserRole {
 @Entity({name: 'users'})
 export class Users extends BaseEntity {
 	@PrimaryGeneratedColumn()
-	id?: number;
+	id!: number;
 
 	@Column('varchar')
 	name!: string;

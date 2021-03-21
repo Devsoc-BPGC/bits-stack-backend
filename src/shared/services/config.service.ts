@@ -33,7 +33,7 @@ export class ConfigService {
 
     get typeOrmConfig(): TypeOrmModuleOptions {
         return {
-            host: this.get('DB_HOST') || 'postgres',
+            host: this.isDevelopment ? 'localhost' : this.get('DB_HOST') || 'postgres',
             port: this.getNumber('DB_PORT') || 5432,
             username: this.get('DB_USERNAME') || 'postgres',
             password: this.get('DB_PASSWORD') || 'eatsleepcode',

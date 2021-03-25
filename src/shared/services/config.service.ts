@@ -33,7 +33,7 @@ export class ConfigService {
 
     get typeOrmConfig(): TypeOrmModuleOptions {
         return {
-            host: this.isDevelopment ? 'localhost' : this.get('DB_HOST') || 'postgres',
+            host: this.isDevelopment ? 'postgres' : this.get('DB_HOST') || 'postgres',
             port: this.getNumber('DB_PORT') || 5432,
             username: this.get('DB_USERNAME') || 'postgres',
             password: this.get('DB_PASSWORD') || 'eatsleepcode',
@@ -51,7 +51,7 @@ export class ConfigService {
     get redis() {
         return {
             port: this.getNumber('REDIS_PORT') || 6439,
-            host: this.get('REDIS_HOST') || 'localhost'
+            host: this.get('REDIS_HOST') || 'localhost' || 'postgres'
         };
     }
 }

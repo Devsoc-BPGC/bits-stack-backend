@@ -1,38 +1,44 @@
 version: "3.9"
 services:
-    bits-stack-backend:
-        container_name: bits-stack-backend
-        #image: bits-stack-backend
-        #restart: always
-        command: npm run server:dev
-        build: .
-        ports:
-          - 5000:5000
-        volumes:
-          - ./:/usr/src/app/
-          - /usr/src/app/node_modules
-        networks:
-          - webnet                  
-        depends_on:
-          - postgres 
-        working_dir: /usr/src/app                  
-    postgres:
-        container_name: postgres
-        image: postgres:12
-        networks:
-          - webnet
-        environment:
-          #here variable are used to createdefault DB for bitstack
-          POSTGRES_PASSWORD: eatsleepcode
-          POSTGRES_USER: postgres
-          POSTGRES_DB: bitstack
-          # here it'll keep al psql data of bitstack
-          PG_DATA: /var/lib/postgresql/data
-        ports:
-          - 5432:5432
-        volumes:
-          - pgdata:/var/lib/postgresql/data    
+  bits-stack-backend:
+    container_name: bits-stack-backend
+    #image: bits-stack-backend
+    #restart: always
+    command: npm run server:dev
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules
+    networks:
+      - webnet
+    depends_on:
+      - redis
+      - postgres
+    working_dir: /usr/src/app
+  redis:
+    container_name: redis
+    image: redis:5
+    networks:
+      - webnet
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    networks:
+      - webnet
+    environment:
+      #here variable are used to createdefault DB for bitstack
+      POSTGRES_PASSWORD: eatsleepcode
+      POSTGRES_USER: postgres
+      POSTGRES_DB: bitstack
+      # here it'll keep al psql data of bitstack
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 networks:
-  webnet:       
+  webnet:
 volumes:
-  pgdata:      
+  pgdata:

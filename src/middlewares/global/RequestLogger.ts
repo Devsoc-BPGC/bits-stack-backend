@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 import { LoggerService } from '../../shared/services/logger.service';
 import { Request, Response, NextFunction } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';

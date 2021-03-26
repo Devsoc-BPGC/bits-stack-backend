@@ -50,8 +50,16 @@ export class ConfigService {
 
     get redis() {
         return {
-            port: this.getNumber('REDIS_PORT') || 6439,
+            port: this.getNumber('REDIS_PORT') || 6379,
             host: this.get('REDIS_HOST') || 'localhost'
+        };
+    }
+
+    get googleapis() {
+        return {
+            client_id: this.get('CLIENT_ID'),
+            client_secret: this.get('CLIENT_SECRET'),
+            redirect_uri: this.get('REDIRECT_URI') || 'http://localhost:3000/auth/google/oauth2/callback'
         };
     }
 }

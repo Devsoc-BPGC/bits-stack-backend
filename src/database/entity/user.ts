@@ -20,7 +20,7 @@ export enum UserRole {
 	POPO = 'popo'
 }
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
 export class Users extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number;

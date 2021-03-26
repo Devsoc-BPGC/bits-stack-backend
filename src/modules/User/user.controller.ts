@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Controller, Post, Get, Req, Body, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Get, Req, Body, UseInterceptors, Res, HttpStatus, Param } from '@nestjs/common';
 import { Request } from 'express';
 import { Users } from '../../database/entity/user';
 import { UserService } from './user.service';
@@ -18,33 +18,65 @@ export class UserController {
     @Post('create')
     @CacheExpiration(15)
     @UseInterceptors(CacheInterceptor)
-	add(@Body() user: CreateUserDto): Users {
-        const newuser = Users.create({
-            name: user.name,
-            email: user.email
-        });
+    async createUser(@Res() res: any, @Body() user: CreateUserDto) {
+        try {
+            const newUser = await this.UserService.createUser(user);
+            res.status(HttpStatus.OK).json({
+                message: 'User has been created successfully!',
+                newUser
+            });
+            this.Logger.info('New user created');
+        } catch (e) {
+            res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'User creation unsuccessful...'
+            });
+            this.Logger.info('Error in user creation');
+        }
         // this.UserService.createUser(newuser);
-        this.Logger.info('New user created');
-        return newuser;
     }
 
-    @Get('get')
-    get(@Req() req: Request) {
-        console.log(req);
-        return req;
+    @Post('update/:id')
+    @CacheExpiration(15)
+    @UseInterceptors(CacheInterceptor)
+    async updateUser(@Res() res: any, @Param('id') userID: number, @Body() user: CreateUserDto) {
+        try {
+            const updatedUser = await this.UserService.updateUser(userID, user);
+            res.status(HttpStatus.OK).json({
+                message: 'User has been updated',
+                updatedUser
+            });
+            this.Logger.info('Update successful');
+        } catch (e) {
+            res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Update unsuccessful...'
+            });
+            this.Logger.info('Update unsuccessful');
+        }
     }
 
-    @Post('add')
-    create(@Req() user: Request): string {
-        console.log(user);
-        return 'New user created';
+    @Get('get/:id')
+    @CacheExpiration(15)
+    @UseInterceptors(CacheInterceptor)
+    async getUser(@Param('id') userID: number, @Res() res: any) {
+        try {
+            const user = await this.UserService.getUser(userID);
+            res.status(HttpStatus.OK).json({
+                user
+            });
+            this.Logger.info('user fetch success');
+        } catch (e) {
+            res.status(HttpStatus.BAD_REQUEST).json({
+                message: 'Unsuccessful...'
+            });
+            this.Logger.info('fetch unsuccessful');
+        }
     }
 
     private async delay(delayInms: number) {
-        return new Promise(resolve  => {
-          setTimeout(() => {
-            resolve(2);
-          }, delayInms);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(2);
+            }, delayInms);
         });
     }
 

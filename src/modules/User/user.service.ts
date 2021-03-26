@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { UserRepository } from './user.repository';
 import { RedisService } from '../../shared/services/redis.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -14,12 +15,18 @@ export class UserService {
 	}
 
 	@Transactional()
-    async createUser(user: Users): Promise<Users> {
+	async createUser(user: CreateUserDto): Promise<Users> {
 		return await this.userRepo.save(user);
 	}
 
 	@Transactional()
-    async findByEmail(email: string): Promise<Users|undefined> {
-		return await this.userRepo.findOne({email: email});
+	async updateUser(userID: number, user: CreateUserDto) {
+		await this.userRepo.update(userID, user);
+		return await this.userRepo.findOne(userID);
+	}
+
+	@Transactional()
+	async getUser(userID: number) {
+		return await this.userRepo.findOne(userID);
 	}
 }

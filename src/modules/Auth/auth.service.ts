@@ -43,6 +43,7 @@ export class AuthService {
                     console.info('Tokens acquired.');
                     resolve(oAuth2Client);
                     res.end('Received authenticated client! You can close this tab now and go back to google oauth uri.');
+                    server.destroy();
                 } else {
                     reject('Invalid access code! Close this tab and try again later.');
                 }

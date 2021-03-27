@@ -27,7 +27,7 @@ export class UserController {
     @UseInterceptors(CacheInterceptor)
     async createUser(@Res() res: any, @Body() user: CreateUserDto) {
         try {
-            const newUser = await this.UserService.createUser(user);
+            const newUser = await this.UserService.createUser(Users.create(user));
             res.status(HttpStatus.OK).json({
                 message: 'User has been created successfully!',
                 newUser
@@ -47,7 +47,7 @@ export class UserController {
     @UseInterceptors(CacheInterceptor)
     async updateUser(@Res() res: any, @Param('id') userID: number, @Body() user: CreateUserDto) {
         try {
-            const updatedUser = await this.UserService.updateUser(userID, user);
+            const updatedUser = await this.UserService.updateUser(userID, Users.create(user));
             res.status(HttpStatus.OK).json({
                 message: 'User has been updated',
                 updatedUser

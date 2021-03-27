@@ -36,7 +36,7 @@ export class DatabaseLoader {
 				migrationsDir: 'src/database/migration/',
 				subscribersDir: 'src/database/subscriber'
 			},
-			synchronize: true,
+			synchronize: false,
 			logging: ['log']
 		};
 		initializeTransactionalContext();

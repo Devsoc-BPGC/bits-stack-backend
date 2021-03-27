@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Controller, Post, Get, Req, Body, UseInterceptors, Res, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Post, Get, Req, Body, UseInterceptors, Res, HttpStatus, Param, InternalServerErrorException } from '@nestjs/common';
 import { Request } from 'express';
 import { Users } from '../../database/entity/user';
 import { UserService } from './user.service';
@@ -10,10 +10,17 @@ import { RedisService } from '../../shared/services/redis.service';
 import { TimeoutInterceptor } from '../../interceptors/timeout.interceptor';
 import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
+import { AuthService } from '../Auth/auth.service';
+import { google } from 'googleapis';
 
 @Controller('user')
 export class UserController {
-    constructor(private readonly UserService: UserService, private Logger: LoggerService, private cache: RedisService) { }
+    constructor(
+        private readonly UserService: UserService,
+        private readonly AuthService: AuthService,
+        private Logger: LoggerService,
+        private cache: RedisService
+    ) { }
 
     @Post('create')
     @CacheExpiration(15)
@@ -86,5 +93,26 @@ export class UserController {
     async timeout(): Promise<void> {
         await this.delay(5000);
         return;
+    }
+
+    @Get('drive/add')
+    async drivecreate() {
+        try {
+            const auth = await this.AuthService.getauthenticatedClient(['https://www.googleapis.com/auth/drive.file']);
+            const drive = google.drive({ version: 'v3', auth: auth });
+            await drive.files.create({
+                requestBody: {
+                    name: 'Test',
+                    mimeType: 'text/plain'
+                },
+                media: {
+                    mimeType: 'text/plain',
+                    body: 'Hello World'
+                }
+            });
+            return 'OK';
+        } catch (e) {
+            throw new InternalServerErrorException();
+        }
     }
 }

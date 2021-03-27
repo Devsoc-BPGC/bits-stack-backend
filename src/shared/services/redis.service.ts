@@ -14,7 +14,7 @@ export class RedisService {
 	constructor (private configservice: ConfigService) {
 		this.factory = {
 			create: async function() {
-				return new redis({ port: configservice.redis.port, host: configservice.redis.host });
+				return new redis.default({ port: configservice.redis.port, host: configservice.redis.host });
 			},
 			destroy: async function(client) {
 				client.quit();

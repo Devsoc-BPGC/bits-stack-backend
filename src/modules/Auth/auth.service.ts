@@ -48,10 +48,13 @@ export class AuthService {
                     reject('Invalid access code! Close this tab and try again later.');
                 }
             }).listen(3000, async () => {
-                open(authorizeUrl).then(child_process => child_process.unref());
+                if (!this.configservice.isDocker) {
+                    open(authorizeUrl).then(child_process => child_process.unref()).catch(err => console.log(err));
+                } else {
+                    console.log('Docker is unable to open browser from inside a container. Copy this uri and paste it in the browser: \n' + authorizeUrl);
+                }
             });
             destroyer(server);
-            console.log('Server has been killed');
             return;
         });
     }

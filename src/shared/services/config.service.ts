@@ -23,6 +23,10 @@ export class ConfigService {
         return this.get('NODE_ENV') || 'development';
     }
 
+    get isDocker(): boolean {
+        return this.get('DOCKER') === 'true' || false;
+    }
+
     get isDevelopment(): boolean {
         return this.nodeEnv === 'development';
     }
@@ -33,7 +37,7 @@ export class ConfigService {
 
     get typeOrmConfig(): TypeOrmModuleOptions {
         return {
-            host: this.isDevelopment ? 'localhost' : this.get('DB_HOST') || 'postgres',
+            host: this.isDocker ? 'postgres' : this.get('DB_HOST') || 'localhost',
             port: this.getNumber('DB_PORT') || 5432,
             username: this.get('DB_USERNAME') || 'postgres',
             password: this.get('DB_PASSWORD') || 'eatsleepcode',
@@ -51,7 +55,7 @@ export class ConfigService {
     get redis() {
         return {
             port: this.getNumber('REDIS_PORT') || 6379,
-            host: this.get('REDIS_HOST') || 'localhost'
+            host: this.isDocker ? 'redis' : this.get('REDIS_HOST') || 'localhost'
         };
     }
 

@@ -14,12 +14,12 @@ export class UserService {
 	}
 
 	@Transactional()
-    async createUser(user: Users): Promise<Users> {
+	async createUser(user: Users): Promise<Users> {
 		return await this.userRepo.save(user);
 	}
 
 	@Transactional()
-    async findByEmail(email: string): Promise<Users|undefined> {
-		return await this.userRepo.findOne({email: email});
+	async findByEmail(email: string): Promise<Users | undefined> {
+		return await this.userRepo.findOne({ email: email });
 	}
 }

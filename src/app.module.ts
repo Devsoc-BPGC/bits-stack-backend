@@ -7,10 +7,12 @@ import { UserModule } from './modules/User/user.modules';
 import { ServiceModule } from './shared/services.module';
 
 @Module({
-    imports: [UserModule, AuthModule, ServiceModule]}
-)
+	imports: [UserModule, AuthModule, ServiceModule]
+})
 export class AppModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer.apply(RequestLogger, bodyParser.json(), bodyParser.urlencoded({ extended: true }), HttpMiddleware).forRoutes('*');
-    }
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(RequestLogger, bodyParser.json(), bodyParser.urlencoded({ extended: true }), HttpMiddleware)
+			.forRoutes('*');
+	}
 }

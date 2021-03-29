@@ -14,7 +14,7 @@ export class Cache implements NestMiddleware {
 	async use(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { key } = request.headers || {};
-			if(!key || typeof key !== 'string') {
+			if (!key || typeof key !== 'string') {
 				// eslint-disable-next-line @typescript-eslint/quotes
 				this.logger.info(`Got incorrect key:${key} value for cache.`);
 				return next();

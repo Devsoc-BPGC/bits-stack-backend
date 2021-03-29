@@ -1,22 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-
-@Entity({name: 'channels'})
+@Entity({ name: 'channels' })
 export class Channels {
-
-	@PrimaryGeneratedColumn({ type:'int'})
+	@PrimaryGeneratedColumn({ type: 'int' })
 	channel_ID?: Number;
 
-	@Column({ type: 'varchar', unique: true})
+	@Column({ type: 'varchar', unique: true })
 	channel_Name!: string;
 
-	@Column({ type: 'varchar', unique: true})
+	@Column({ type: 'varchar', unique: true })
 	channel_Mod!: string;
-    // will make relations later for the abive with Userid
-
+	// will make relations later for the abive with Userid
 }

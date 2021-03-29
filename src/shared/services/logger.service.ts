@@ -32,20 +32,12 @@ export class LoggerService {
 			transports: [
 				new winston.transports.Console({
 					level: 'silly',
-					format: combine(
-						colorize(),
-						timestamp(),
-						myFormat
-					)
+					format: combine(colorize(), timestamp(), myFormat)
 				}),
 				new winston.transports.File({
 					level: 'info',
 					filename: 'combinedlog',
-					format: combine(
-						colorize(),
-						timestamp(),
-						myFormat
-					)
+					format: combine(colorize(), timestamp(), myFormat)
 				})
 			]
 		});
@@ -53,7 +45,7 @@ export class LoggerService {
 	}
 
 	public static getLogger(): winston.Logger {
-		if(!this.logger) {
+		if (!this.logger) {
 			this.logger = this.createLogger();
 		}
 		return this.logger;
@@ -67,7 +59,7 @@ export class LoggerService {
 	public log(message: string, ...args: any[]): void {
 		const filepath = parentModule();
 		const logger = LoggerService.getLogger();
-		if(filepath) {
+		if (filepath) {
 			logger.log(this.parseMessage(message, filepath), args);
 		} else {
 			logger.log(this.parseMessage(message, 'app'), args);
@@ -77,7 +69,7 @@ export class LoggerService {
 	public info(message: string, ...args: any[]): void {
 		const filepath = parentModule();
 		const logger = LoggerService.getLogger();
-		if(filepath) {
+		if (filepath) {
 			logger.info(this.parseMessage(message, filepath), args);
 		} else {
 			logger.info(this.parseMessage(message, 'app'), args);
@@ -87,7 +79,7 @@ export class LoggerService {
 	public warn(message: string, ...args: any[]): void {
 		const filepath = parentModule();
 		const logger = LoggerService.getLogger();
-		if(filepath) {
+		if (filepath) {
 			logger.warn(this.parseMessage(message, filepath), args);
 		} else {
 			logger.warn(this.parseMessage(message, 'app'), args);
@@ -97,7 +89,7 @@ export class LoggerService {
 	public error(message: string, ...args: any[]): void {
 		const filepath = parentModule();
 		const logger = LoggerService.getLogger();
-		if(filepath) {
+		if (filepath) {
 			logger.error(this.parseMessage(message, filepath), args);
 		} else {
 			logger.error(this.parseMessage(message, 'app'), args);
@@ -108,7 +100,7 @@ export class LoggerService {
 /**
  * Take a quick peek of service here
  */
-if(require.main === module) {
+if (require.main === module) {
 	const logger = new LoggerService(); // This is how the service is to be called.
 	logger.log('info', 'Log successful!');
 }

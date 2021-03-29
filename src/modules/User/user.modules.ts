@@ -9,21 +9,14 @@ import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 
 @Module({
-    imports: [AuthModule],
-    controllers: [UserController],
-    providers: [
-        UserService,
-        UserRepository,
-        LoggerService,
-        RedisService,
-        ConfigService,
-        AuthService
-    ],
-    exports: [UserService]
+	imports: [AuthModule],
+	controllers: [UserController],
+	providers: [UserService, UserRepository, LoggerService, RedisService, ConfigService, AuthService],
+	exports: [UserService]
 })
 export class UserModule implements NestModule {
-    // Configure User middlewares here
-    configure(consumer: MiddlewareConsumer) {
-        /* consumer.apply(Cache).forRoutes('*'); */
-    }
+	// Configure User middlewares here
+	configure(consumer: MiddlewareConsumer) {
+		/* consumer.apply(Cache).forRoutes('*'); */
+	}
 }

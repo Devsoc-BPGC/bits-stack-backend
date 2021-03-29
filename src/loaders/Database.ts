@@ -6,8 +6,11 @@
 
 import 'reflect-metadata';
 import { Promise } from 'bluebird';
-import {createConnection, Connection, ConnectionOptions} from 'typeorm';
-import { patchTypeORMRepositoryWithBaseRepository, initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
+import { createConnection, Connection, ConnectionOptions } from 'typeorm';
+import {
+	patchTypeORMRepositoryWithBaseRepository,
+	initializeTransactionalContext
+} from 'typeorm-transactional-cls-hooked';
 import { Users } from '../database/entity/user';
 import { ConfigService } from '../shared/services/config.service';
 import { TypeOrmModuleOptions } from '../models/contracts/TypeOrmModuleOptions';
@@ -44,36 +47,41 @@ export class DatabaseLoader {
 	}
 
 	/**
-     * @returns {Promise}
-     *
-     * @description Creates a new connection pool when the app starts.
-     */
+	 * @returns {Promise}
+	 *
+	 * @description Creates a new connection pool when the app starts.
+	 */
 	public connectPromise(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			createConnection(this.connectionConfig).then(connection => {
-				this.connection = connection;
-				console.log('Database is up and running on port: 5432!');
-				return resolve();
-			}).catch(err => {
-				return reject('Unknown error occured:\n' + err);
-			});
+			createConnection(this.connectionConfig)
+				.then((connection) => {
+					this.connection = connection;
+					console.log('Database is up and running on port: 5432!');
+					return resolve();
+				})
+				.catch((err) => {
+					return reject('Unknown error occured:\n' + err);
+				});
 		});
 	}
 
 	/**
-     * @returns {Promise}
-     *
-     * @description Closes connection in a pool when the application is closed.
-     */
+	 * @returns {Promise}
+	 *
+	 * @description Closes connection in a pool when the application is closed.
+	 */
 	public closeConnPromise(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			if(this.connection) {
-				this.connection.close().then(() => {
-					this.connection = undefined;
-					return resolve();
-				}).catch(err => {
-					return reject('Unexpected error occured:\n' + err);
-				});
+			if (this.connection) {
+				this.connection
+					.close()
+					.then(() => {
+						this.connection = undefined;
+						return resolve();
+					})
+					.catch((err) => {
+						return reject('Unexpected error occured:\n' + err);
+					});
 			}
 			return resolve(alert('No active connections found'));
 		});

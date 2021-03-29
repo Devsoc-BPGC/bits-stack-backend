@@ -6,7 +6,6 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 
 @Injectable()
 export class RequestLogger implements NestMiddleware {
-
 	use(req: Request, res: Response, next: NextFunction): void {
 		const Log = new LoggerService();
 		morgan('combined', {

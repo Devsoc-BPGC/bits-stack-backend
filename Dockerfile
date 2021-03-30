@@ -11,6 +11,6 @@ RUN npm install
 COPY . /usr/src/app
 # copying bundle source 
 
-EXPOSE 5000
+EXPOSE 5000 3000
 
 CMD ["npm", "start"] 

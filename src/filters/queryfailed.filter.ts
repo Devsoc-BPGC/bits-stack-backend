@@ -6,7 +6,7 @@ import { QueryFailedError } from 'typeorm';
 
 @Catch(QueryFailedError)
 export class QueryFailedFilter implements ExceptionFilter {
-	constructor(public reflector: Reflector) {}
+	// constructor(public reflector: Reflector) {}
 
 	catch(exception: any, host: ArgumentsHost) {
 		const ctx = host.switchToHttp();

@@ -7,7 +7,11 @@
 
 import { getCustomRepository } from 'typeorm';
 import { Discussions } from '../../database/entity/channelDiscussion';
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException
+} from '@nestjs/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { AnnouncementRepository } from './announcement.repository';
 import { RedisService } from '../../shared/services/redis.service';
@@ -35,8 +39,16 @@ export class AnnouncementService {
   }
 
   @Transactional()
-  async findById(announcementId: number): Promise<Discussions | undefined> {
-    return await this.announcementRepo.findOne({ message_ID: announcementId });
+  async findById(announcementId: number): Promise<Discussions> {
+    const announcement = await this.announcementRepo.findOne({
+      message_ID: announcementId,
+      isAnnouncement: true
+    });
+    if (!announcement) {
+      throw new NotFoundException();
+    } else {
+      return announcement;
+    }
   }
 
   @Transactional()
@@ -44,26 +56,26 @@ export class AnnouncementService {
     announcementId: number,
     announcement: UpdateAnnouncementDto
   ): Promise<Discussions | undefined> {
+    await this.findById(announcementId);
     await this.announcementRepo.update(announcementId, announcement);
-    return await this.announcementRepo.findOne({ message_ID: announcementId });
+    return await this.findById(announcementId);
   }
 
   @Transactional()
   async deleteAnnouncement(
     announcementId: number
-  ): Promise<Discussions | undefined> {
-    let x = await this.announcementRepo.delete({ message_ID: announcementId });
-    console.log(x);
-    return await this.announcementRepo.findOne({ message_ID: announcementId });
+  ): Promise<Object | undefined> {
+    await this.findById(announcementId);
+    await this.announcementRepo.delete({ message_ID: announcementId });
+    const announcement = await this.announcementRepo.findOne({
+      message_ID: announcementId
+    });
+    if (!announcement) {
+      return {
+        message: `Announcement with id ${announcementId} has been deleted`
+      };
+    } else {
+      throw new InternalServerErrorException();
+    }
   }
-
-  // @Transactional()
-  // async createUser(user: Users): Promise<Users> {
-  // 	return await this.announcementRepo.save(user);
-  // }
-
-  // @Transactional()
-  // async findByEmail(email: string): Promise<Users|undefined> {
-  // 	return await this.announcementRepo.findOne({email: email});
-  // }
 }

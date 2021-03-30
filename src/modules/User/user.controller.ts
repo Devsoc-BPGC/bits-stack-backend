@@ -1,3 +1,9 @@
+/**
+ * Created Users Service
+ *
+ * @author Ritvij <ritvij2001@gmail.com>
+ */
+
 import 'reflect-metadata';
 import {
 	Controller,
@@ -24,7 +30,8 @@ import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { AuthService } from '../Auth/auth.service';
 import { google } from 'googleapis';
-import { QueryFailedFilter } from '../../exceptions/queryfailed.exception';
+import { QueryFailedFilter } from '../../filters/queryfailed.filter';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -38,10 +45,10 @@ export class UserController {
 	@Post('create')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
-	@UseFilters(QueryFailedFilter)
-	async createUser(@Res() res: any, @Body() user: CreateUserDto) {
+	@UseFilters(new QueryFailedFilter())
+	async createUser(@Res() res: Response, @Body() user: CreateUserDto) {
 		const newUser = await this.UserService.createUser(Users.create(user));
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			message: 'User has been created successfully!',
 			newUser
 		});
@@ -50,10 +57,10 @@ export class UserController {
 	@Post('update/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
-	@UseFilters(QueryFailedFilter)
-	async updateUser(@Res() res: any, @Param('id') userID: number, @Body() user: CreateUserDto) {
+	@UseFilters(new QueryFailedFilter())
+	async updateUser(@Res() res: Response, @Param('id') userID: number, @Body() user: CreateUserDto) {
 		const updatedUser = await this.UserService.updateUser(userID, Users.create(user));
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			message: 'User has been updated',
 			updatedUser
 		});
@@ -62,10 +69,10 @@ export class UserController {
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
-	@UseFilters(QueryFailedFilter)
-	async getUser(@Param('id') userID: number, @Res() res: any) {
+	@UseFilters(new QueryFailedFilter())
+	async getUser(@Param('id') userID: number, @Res() res: Response) {
 		const user = await this.UserService.getUser(userID);
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			user
 		});
 	}
@@ -73,10 +80,10 @@ export class UserController {
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
-	@UseFilters(QueryFailedFilter)
-	async deleteUser(@Param('id') userID: number, @Res() res: any) {
+	@UseFilters(new QueryFailedFilter())
+	async deleteUser(@Param('id') userID: number, @Res() res: Response) {
 		const result = await this.UserService.deleteUser(userID);
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			message: 'User deleted',
 			result
 		});

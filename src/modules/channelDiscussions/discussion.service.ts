@@ -38,7 +38,7 @@ export class DiscussionService {
 	@Transactional()
 	async findById(DiscussionId: number): Promise<Discussions> {
 		const Discussion = await this.DiscussionRepo.findOne({
-			ID: DiscussionId
+			id: DiscussionId
 		});
 		if (!Discussion) {
 			throw new NotFoundException();
@@ -52,18 +52,24 @@ export class DiscussionService {
 		DiscussionId: number,
 		Discussion: UpdateDiscussionDto
 	): Promise<Discussions | undefined> {
-		await this.DiscussionRepo.update(DiscussionId, Discussion);
-		return await this.findById(DiscussionId);
+		try{
+			const postRes = await this.DiscussionRepo.update(DiscussionId, Discussion);
+			if (postRes.affected===0) {
+				throw new NotFoundException();
+			}
+			return await this.findById(DiscussionId);
+		}
+		catch(e){
+			throw e;;
+		}	
 	}
 
 	@Transactional()
 	async deleteDiscussion(DiscussionId: number): Promise<Object | undefined> {
 		try{
-			const delRes = await this.DiscussionRepo.delete({ ID: DiscussionId });
+			const delRes = await this.DiscussionRepo.delete({ id: DiscussionId });
 			if (delRes.affected===0) {
-				return{
-					message:"message does not exist"
-				}
+				throw new NotFoundException();
 			}
 			else{
 				return{

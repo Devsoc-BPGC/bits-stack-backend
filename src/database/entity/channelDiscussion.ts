@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+/**
+ * @description Changed name of class and extended BaseEntity
+ *
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
+ */
 
-@Entity({ name: 'channelDiscussions' })
-export class Channels {
-	@PrimaryGeneratedColumn({ type: 'int' })
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+
+@Entity({ name: 'discussions' })
+export class Discussions extends BaseEntity {
+	@PrimaryGeneratedColumn('increment', { type: 'int' })
 	message_ID?: Number;
 
 	@Column({ type: 'varchar' })
@@ -12,7 +18,7 @@ export class Channels {
 	@Column({ type: 'varchar' })
 	content!: string;
 
-	@Column({ type: 'int', unique: true })
+	@Column({ type: 'int' })
 	Channel_ID?: Number;
 
 	@Column({ type: 'varchar', nullable: true })

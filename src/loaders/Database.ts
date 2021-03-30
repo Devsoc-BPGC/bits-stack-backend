@@ -1,7 +1,7 @@
 /**
- * @description Initialises Typeorm
+ * @description Added Entities in Connection Config
  *
- * @author SarveshShinde <SarveshShinde64@gmail.com>
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
@@ -12,6 +12,9 @@ import {
 	initializeTransactionalContext
 } from 'typeorm-transactional-cls-hooked';
 import { Users } from '../database/entity/user';
+import { Discussions } from '../database/entity/channelDiscussion';
+import { Channels } from '../database/entity/channels';
+import { Hashtags } from '../database/entity/hashtag';
 import { ConfigService } from '../shared/services/config.service';
 import { TypeOrmModuleOptions } from '../models/contracts/TypeOrmModuleOptions';
 
@@ -31,7 +34,7 @@ export class DatabaseLoader {
 			username: this.TypeOrmModuleOptions.username,
 			password: this.TypeOrmModuleOptions.password,
 			database: this.TypeOrmModuleOptions.database,
-			entities: [Users],
+			entities: [Users, Discussions, Channels, Hashtags],
 			migrations: ['dist/database/migration/**/*.js'],
 			subscribers: ['dist/database/subscriber/**/*.js'],
 			cli: {
@@ -39,7 +42,7 @@ export class DatabaseLoader {
 				migrationsDir: 'src/database/migration/',
 				subscribersDir: 'src/database/subscriber'
 			},
-			synchronize: false,
+			synchronize: true,
 			logging: ['log']
 		};
 		initializeTransactionalContext();

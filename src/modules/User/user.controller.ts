@@ -1,6 +1,5 @@
 import 'reflect-metadata';
-import { Controller, Post, Get, Req, Body, UseInterceptors, Res, HttpStatus, Param, InternalServerErrorException } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Post, Get, Req, Body, UseInterceptors, Res, HttpStatus, Param, InternalServerErrorException, UseFilters, Delete } from '@nestjs/common';
 import { Users } from '../../database/entity/user';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,6 +11,7 @@ import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { AuthService } from '../Auth/auth.service';
 import { google } from 'googleapis';
+import { QueryFailedFilter } from '../../exceptions/queryfailed.exception';
 
 @Controller('user')
 export class UserController {
@@ -25,58 +25,48 @@ export class UserController {
     @Post('create')
     @CacheExpiration(15)
     @UseInterceptors(CacheInterceptor)
+    @UseFilters(QueryFailedFilter)
     async createUser(@Res() res: any, @Body() user: CreateUserDto) {
-        try {
-            const newUser = await this.UserService.createUser(Users.create(user));
-            res.status(HttpStatus.OK).json({
-                message: 'User has been created successfully!',
-                newUser
-            });
-            this.Logger.info('New user created');
-        } catch (e) {
-            res.status(HttpStatus.BAD_REQUEST).json({
-                message: 'User creation unsuccessful...'
-            });
-            this.Logger.info('Error in user creation');
-        }
-        // this.UserService.createUser(newuser);
+        const newUser = await this.UserService.createUser(Users.create(user));
+        res.status(HttpStatus.OK).json({
+            message: 'User has been created successfully!',
+            newUser
+        });
     }
 
     @Post('update/:id')
     @CacheExpiration(15)
     @UseInterceptors(CacheInterceptor)
+    @UseFilters(QueryFailedFilter)
     async updateUser(@Res() res: any, @Param('id') userID: number, @Body() user: CreateUserDto) {
-        try {
-            const updatedUser = await this.UserService.updateUser(userID, Users.create(user));
-            res.status(HttpStatus.OK).json({
-                message: 'User has been updated',
-                updatedUser
-            });
-            this.Logger.info('Update successful');
-        } catch (e) {
-            res.status(HttpStatus.BAD_REQUEST).json({
-                message: 'Update unsuccessful...'
-            });
-            this.Logger.info('Update unsuccessful');
-        }
+        const updatedUser = await this.UserService.updateUser(userID, Users.create(user));
+        res.status(HttpStatus.OK).json({
+            message: 'User has been updated',
+            updatedUser
+        });
     }
 
     @Get('get/:id')
     @CacheExpiration(15)
     @UseInterceptors(CacheInterceptor)
+    @UseFilters(QueryFailedFilter)
     async getUser(@Param('id') userID: number, @Res() res: any) {
-        try {
-            const user = await this.UserService.getUser(userID);
-            res.status(HttpStatus.OK).json({
-                user
-            });
-            this.Logger.info('user fetch success');
-        } catch (e) {
-            res.status(HttpStatus.BAD_REQUEST).json({
-                message: 'Unsuccessful...'
-            });
-            this.Logger.info('fetch unsuccessful');
-        }
+        const user = await this.UserService.getUser(userID);
+        res.status(HttpStatus.OK).json({
+            user
+        });
+    }
+
+    @Delete('delete/:id')
+    @CacheExpiration(15)
+    @UseInterceptors(CacheInterceptor)
+    @UseFilters(QueryFailedFilter)
+    async deleteUser(@Param('id') userID: number, @Res() res: any) {
+        const result = await this.UserService.deleteUser(userID);
+        res.status(HttpStatus.OK).json({
+            message: 'User deleted',
+            result
+        });
     }
 
     private async delay(delayInms: number) {

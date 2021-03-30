@@ -28,4 +28,9 @@ export class UserService {
 	async getUser(userID: number) {
 		return await this.userRepo.findOne(userID);
 	}
+
+	@Transactional()
+	async deleteUser(userID: number) {
+		return await this.userRepo.delete(userID);
+	}
 }

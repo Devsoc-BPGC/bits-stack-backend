@@ -23,10 +23,7 @@ export class ExpressLoader {
 			res.send('Welcome to Bits Stack')
 		}) */
 		const port = this.port || 5000;
-		const app = await NestFactory.create<NestExpressApplication>(
-			AppModule,
-			new ExpressAdapter()
-		);
+		const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
 		app.listen(port, () => {
 			console.log(`The server is listening on PORT:${port}`);
 		});

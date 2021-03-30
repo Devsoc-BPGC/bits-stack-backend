@@ -1,17 +1,15 @@
-import {MigrationInterface, QueryRunner} from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class channels1616245261174 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "channels" (
+	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`CREATE TABLE "channels" (
             "channel_ID?" SERIAL NOT NULL,
             "channel_Name" character varying NOT NULL,
             "channel_Mod" character varying NOT NULL,      
             PRIMARY KEY ("channel_ID?"))`);
-    }
+	}
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('DROP TABLE channels');
-    }
-
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query('DROP TABLE channels');
+	}
 }

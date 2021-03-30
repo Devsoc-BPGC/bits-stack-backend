@@ -14,19 +14,13 @@ import { AnnouncementRepository } from './announcement.repository';
 import { AnnouncementService } from './announcement.service';
 
 @Module({
-  controllers: [AnnouncementController],
-  providers: [
-    AnnouncementService,
-    AnnouncementRepository,
-    LoggerService,
-    RedisService,
-    ConfigService
-  ],
-  exports: [AnnouncementService]
+	controllers: [AnnouncementController],
+	providers: [AnnouncementService, AnnouncementRepository, LoggerService, RedisService, ConfigService],
+	exports: [AnnouncementService]
 })
 export class AnnouncementModule implements NestModule {
-  // Configure User middlewares here
-  configure(consumer: MiddlewareConsumer) {
-    /* consumer.apply(Cache).forRoutes('*'); */
-  }
+	// Configure User middlewares here
+	configure(consumer: MiddlewareConsumer) {
+		/* consumer.apply(Cache).forRoutes('*'); */
+	}
 }

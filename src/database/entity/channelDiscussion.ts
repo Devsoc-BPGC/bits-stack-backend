@@ -9,24 +9,24 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity({ name: 'discussions' })
 export class Discussions extends BaseEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'int' })
-  message_ID?: Number;
+	@PrimaryGeneratedColumn('increment', { type: 'int' })
+	message_ID?: Number;
 
-  @Column({ type: 'varchar' })
-  title!: string;
+	@Column({ type: 'varchar' })
+	title!: string;
 
-  @Column({ type: 'varchar' })
-  content!: string;
+	@Column({ type: 'varchar' })
+	content!: string;
 
-  @Column({ type: 'int' })
-  Channel_ID?: Number;
+	@Column({ type: 'int' })
+	Channel_ID?: Number;
 
-  @Column({ type: 'varchar', nullable: true })
-  tags!: string;
+	@Column({ type: 'varchar', nullable: true })
+	tags!: string;
 
-  @Column({ type: 'varchar' })
-  isAnnouncement?: Boolean;
+	@Column({ type: 'varchar' })
+	isAnnouncement?: Boolean;
 
-  @Column({ type: 'varchar', nullable: true })
-  files_image?: String;
+	@Column({ type: 'varchar', nullable: true })
+	files_image?: String;
 }

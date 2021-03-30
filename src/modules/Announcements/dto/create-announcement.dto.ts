@@ -5,9 +5,9 @@
  */
 
 export class CreateAnnouncementDto {
-  title!: string;
-  content!: string;
-  Channel_ID!: number;
-  tags?: string;
-  files_image?: string;
+	title!: string;
+	content!: string;
+	Channel_ID!: number;
+	tags?: string;
+	files_image?: string;
 }

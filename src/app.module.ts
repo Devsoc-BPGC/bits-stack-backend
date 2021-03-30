@@ -15,17 +15,12 @@ import { AnnouncementModule } from './modules/Announcements/announcement.modules
 import { ServiceModule } from './shared/services.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ServiceModule, AnnouncementModule]
+	imports: [UserModule, AuthModule, ServiceModule, AnnouncementModule]
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        RequestLogger,
-        bodyParser.json(),
-        bodyParser.urlencoded({ extended: true }),
-        HttpMiddleware
-      )
-      .forRoutes('*');
-  }
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(RequestLogger, bodyParser.json(), bodyParser.urlencoded({ extended: true }), HttpMiddleware)
+			.forRoutes('*');
+	}
 }

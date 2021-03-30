@@ -13,7 +13,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 @Entity({ name: 'discussions' })
 export class Discussions extends BaseEntity {
 	@PrimaryGeneratedColumn('increment', { type: 'int' })
-	message_ID?: Number;
+	ID?: Number;
 
 	@Column({ type: 'varchar' })
 	title!: string;

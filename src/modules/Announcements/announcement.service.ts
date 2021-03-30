@@ -37,7 +37,7 @@ export class AnnouncementService {
 	@Transactional()
 	async findById(announcementId: number): Promise<Discussions> {
 		const announcement = await this.announcementRepo.findOne({
-			message_ID: announcementId,
+			ID: announcementId,
 			isAnnouncement: true
 		});
 		if (!announcement) {
@@ -60,9 +60,9 @@ export class AnnouncementService {
 	@Transactional()
 	async deleteAnnouncement(announcementId: number): Promise<Object | undefined> {
 		await this.findById(announcementId);
-		await this.announcementRepo.delete({ message_ID: announcementId });
+		await this.announcementRepo.delete({ ID: announcementId });
 		const announcement = await this.announcementRepo.findOne({
-			message_ID: announcementId
+			ID: announcementId
 		});
 		if (!announcement) {
 			return {

@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
+ * Created Channel Discussion Entity
+ * @author Devesh 
+ * 
  * @description Changed name of class and extended BaseEntity
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
@@ -10,7 +13,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 @Entity({ name: 'discussions' })
 export class Discussions extends BaseEntity {
 	@PrimaryGeneratedColumn('increment', { type: 'int' })
-	message_ID?: Number;
+	id?: Number;
 
 	@Column({ type: 'varchar' })
 	title!: string;

@@ -1,6 +1,24 @@
+/**
+ * Created Users Service
+ *
+ * @author Ritvij <ritvij2001@gmail.com>
+ */
+
 import 'reflect-metadata';
-import { Controller, Post, Get, Req, Body, UseInterceptors, InternalServerErrorException } from '@nestjs/common';
-import { Request } from 'express';
+import {
+	Controller,
+	Post,
+	Get,
+	Req,
+	Body,
+	UseInterceptors,
+	Res,
+	HttpStatus,
+	Param,
+	InternalServerErrorException,
+	UseFilters,
+	Delete
+} from '@nestjs/common';
 import { Users } from '../../database/entity/user';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,6 +30,8 @@ import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { AuthService } from '../Auth/auth.service';
 import { google } from 'googleapis';
+import { QueryFailedFilter } from '../../filters/queryfailed.filter';
+import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -25,26 +45,48 @@ export class UserController {
 	@Post('create')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
-	add(@Body() user: CreateUserDto): Users {
-		const newuser = Users.create({
-			name: user.name,
-			email: user.email
+	@UseFilters(new QueryFailedFilter())
+	async createUser(@Res() res: Response, @Body() user: CreateUserDto) {
+		const newUser = await this.UserService.createUser(Users.create(user));
+		return res.status(HttpStatus.OK).json({
+			message: 'User has been created successfully!',
+			newUser
 		});
-		// this.UserService.createUser(newuser);
-		this.Logger.info('New user created');
-		return newuser;
 	}
 
-	@Get('get')
-	get(@Req() req: Request) {
-		console.log(req);
-		return req;
+	@Post('update/:id')
+	@CacheExpiration(15)
+	@UseInterceptors(CacheInterceptor)
+	@UseFilters(new QueryFailedFilter())
+	async updateUser(@Res() res: Response, @Param('id') userID: number, @Body() user: CreateUserDto) {
+		const updatedUser = await this.UserService.updateUser(userID, Users.create(user));
+		return res.status(HttpStatus.OK).json({
+			message: 'User has been updated',
+			updatedUser
+		});
 	}
 
-	@Post('add')
-	create(@Req() user: Request): string {
-		console.log(user);
-		return 'New user created';
+	@Get('get/:id')
+	@CacheExpiration(15)
+	@UseInterceptors(CacheInterceptor)
+	@UseFilters(new QueryFailedFilter())
+	async getUser(@Param('id') userID: number, @Res() res: Response) {
+		const user = await this.UserService.getUser(userID);
+		return res.status(HttpStatus.OK).json({
+			user
+		});
+	}
+
+	@Delete('delete/:id')
+	@CacheExpiration(15)
+	@UseInterceptors(CacheInterceptor)
+	@UseFilters(new QueryFailedFilter())
+	async deleteUser(@Param('id') userID: number, @Res() res: Response) {
+		const result = await this.UserService.deleteUser(userID);
+		return res.status(HttpStatus.OK).json({
+			message: 'User deleted',
+			result
+		});
 	}
 
 	private async delay(delayInms: number) {

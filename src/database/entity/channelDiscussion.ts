@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Created Channel Discussion Entity
- * @author Devesh 
- * 
+ * @author Devesh
+ *
  * @description Changed name of class and extended BaseEntity
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>

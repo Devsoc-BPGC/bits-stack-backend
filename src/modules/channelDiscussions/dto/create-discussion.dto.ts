@@ -1,7 +1,7 @@
 /**
  * Created DTO
  *
- * @author Devesh 
+ * @author Devesh
  */
 
 export class CreateDiscussionDto {

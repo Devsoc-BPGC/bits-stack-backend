@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * Created Discussion Controller
+ * @description Refactored the import of Discussions
  *
- * @author Devesh 
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
 import { Controller, Post, Get, Put, Delete, Body, UseInterceptors, Param, UseFilters } from '@nestjs/common';
-import { Discussions } from '../../database/entity/channelDiscussion';
+import { Discussions } from '../../database';
 import { DiscussionService } from './discussion.service';
 import { CreateDiscussionDto, UpdateDiscussionDto } from './dto';
 import { LoggerService } from '../../shared/services/logger.service';
@@ -19,7 +19,7 @@ import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 
-//Controller for discussions
+// Controller for discussions
 @Controller('discussions')
 export class DiscussionController {
 	constructor(
@@ -28,7 +28,7 @@ export class DiscussionController {
 		private cache: RedisService
 	) {}
 
-	//method to get it by id
+	// method to get it by id
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -39,7 +39,7 @@ export class DiscussionController {
 		return Discussion ? { Discussion } : Discussion;
 	}
 
-	//method to get it by channel id
+	// method to get it by channel id
 	@Get('get/channel/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
@@ -49,26 +49,25 @@ export class DiscussionController {
 		return Discussions ? { Discussions } : Discussions;
 	}
 
-	//method to add a Discussion
+	// method to add a Discussion
 	@Post('add')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
 	@UseFilters(new QueryFailedFilter())
 	async addDiscussion(@Body() DiscussionData: CreateDiscussionDto) {
-		const newDiscussion = Discussions.create({	
+		const newDiscussion = Discussions.create({
 			title: DiscussionData.title,
 			content: DiscussionData.content,
 			Channel_ID: DiscussionData.Channel_ID,
 			tags: DiscussionData.tags,
-			isAnnouncement: DiscussionData.isAnnouncement||false,
+			isAnnouncement: DiscussionData.isAnnouncement || false,
 			files_image: DiscussionData.files_image
-			}
-		);
+		});
 		const Discussion = await this.DiscussionService.createDiscussion(newDiscussion);
 		return Discussion ? { Discussion } : Discussion;
 	}
 
-	//method to update it by id
+	// method to update it by id
 	@Put('update/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
@@ -78,7 +77,7 @@ export class DiscussionController {
 		return Discussion ? { Discussion } : Discussion;
 	}
 
-	//method to delete it by id
+	// method to delete it by id
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)

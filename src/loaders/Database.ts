@@ -1,5 +1,5 @@
 /**
- * @description Added Entities in Connection Config
+ * @description Refactored the import of entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -11,10 +11,7 @@ import {
 	patchTypeORMRepositoryWithBaseRepository,
 	initializeTransactionalContext
 } from 'typeorm-transactional-cls-hooked';
-import { Users } from '../database/entity/user';
-import { Discussions } from '../database/entity/channelDiscussion';
-import { Channels } from '../database/entity/channels';
-import { Hashtags } from '../database/entity/hashtag';
+import { Channels, Discussions, Users, Hashtags } from '../database';
 import { ConfigService } from '../shared/services/config.service';
 import { TypeOrmModuleOptions } from '../models/contracts/TypeOrmModuleOptions';
 

@@ -1,7 +1,7 @@
 /**
- * Created Users Service
+ * @description Refactored the import of Users
  *
- * @author Ritvij <ritvij2001@gmail.com>
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
@@ -19,7 +19,7 @@ import {
 	UseFilters,
 	Delete
 } from '@nestjs/common';
-import { Users } from '../../database/entity/user';
+import { Users } from '../../database';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoggerService } from '../../shared/services/logger.service';

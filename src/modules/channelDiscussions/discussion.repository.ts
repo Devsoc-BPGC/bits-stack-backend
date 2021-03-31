@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * Created Discussion Repository
+ * @description Refactored the import of Discussions
  *
- * @author Devesh 
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import { Injectable } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
-import { Discussions } from '../../database/entity/channelDiscussion';
+import { Discussions } from '../../database';
 
 @EntityRepository(Discussions)
 export class DiscussionRepository extends Repository<Discussions> {}

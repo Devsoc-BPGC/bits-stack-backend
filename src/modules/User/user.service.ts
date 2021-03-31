@@ -1,11 +1,11 @@
 /**
- * Created Users Service
+ * @description Refactored the import of Users
  *
- * @author Ritvij <ritvij2001@gmail.com>
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import { getCustomRepository, Repository } from 'typeorm';
-import { Users, UserRole } from '../../database/entity/user';
+import { Users } from '../../database';
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { UserRepository } from './user.repository';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Created Channels  Entity
- * @author Devesh 
+ * @author Devesh
  */
 
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';

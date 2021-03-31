@@ -2,7 +2,7 @@
 /**
  * Exported DTO
  *
- * @author Devesh 
+ * @author Devesh
  */
 
 import { CreateDiscussionDto } from './create-discussion.dto';

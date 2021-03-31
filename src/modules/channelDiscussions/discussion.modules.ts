@@ -2,7 +2,7 @@
 /**
  * Created Discussion Module
  *
- * @author Devesh 
+ * @author Devesh
  */
 
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';

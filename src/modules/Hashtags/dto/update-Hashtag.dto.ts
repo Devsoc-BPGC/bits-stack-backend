@@ -5,6 +5,9 @@
  * @author Devesh
  */
 
+import { IsString, IsOptional } from 'class-validator';
 export class UpdateHashtagDto {
+	@IsOptional()
+	@IsString()
 	tag_name!: string;
 }

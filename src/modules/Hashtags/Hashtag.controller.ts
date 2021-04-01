@@ -6,7 +6,7 @@
  */
 
 import 'reflect-metadata';
-import { Controller, Post, Get, Put, Delete, Body, UseInterceptors, Param, UseFilters } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, UseInterceptors, Param, UseFilters, UsePipes } from '@nestjs/common';
 import { Hashtags } from '../../database/entity/hashtag';
 import { HashtagService } from './Hashtag.service';
 import { CreateHashtagDto, UpdateHashtagDto } from './dto';
@@ -16,6 +16,7 @@ import { RedisService } from '../../shared/services/redis.service';
 import { UndefinedInterceptor } from '../../interceptors/undefined.interceptor';
 import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
+import { ValidationPipe } from '../../pipes/validation.pipe';
 
 // Controller for Hashtags
 @Controller('Hashtags')
@@ -39,6 +40,7 @@ export class HashtagController {
 
 	// method to add a Hashtag
 	@Post('add')
+	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
 	@UseFilters(new QueryFailedFilter())
@@ -52,6 +54,7 @@ export class HashtagController {
 
 	// method to update it by id
 	@Put('update/:id')
+	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
 	@UseFilters(new QueryFailedFilter())

@@ -1,5 +1,5 @@
 /**
- * @description Refactored the import of Users
+ * @description Added Custom Validation Pipe
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -17,7 +17,8 @@ import {
 	Param,
 	InternalServerErrorException,
 	UseFilters,
-	Delete
+	Delete,
+	UsePipes
 } from '@nestjs/common';
 import { Users } from '../../database';
 import { UserService } from './user.service';
@@ -32,6 +33,7 @@ import { AuthService } from '../Auth/auth.service';
 import { google } from 'googleapis';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { Response } from 'express';
+import { ValidationPipe } from '../../pipes/validation.pipe';
 
 @Controller('user')
 export class UserController {
@@ -43,6 +45,7 @@ export class UserController {
 	) {}
 
 	@Post('create')
+	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
 	@UseFilters(new QueryFailedFilter())

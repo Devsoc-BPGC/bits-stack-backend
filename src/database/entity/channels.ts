@@ -4,12 +4,12 @@
  * @author Devesh
  */
 
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({ name: 'channels' })
-export class Channels {
+export class Channels extends BaseEntity {
 	@PrimaryGeneratedColumn({ type: 'int' })
-	channel_ID?: Number;
+	id?: Number;
 
 	@Column({ type: 'varchar', unique: true })
 	channel_Name!: string;

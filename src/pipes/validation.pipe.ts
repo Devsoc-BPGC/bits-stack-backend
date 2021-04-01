@@ -1,3 +1,9 @@
+/**
+ * @description Created this custom validation pipe
+ *
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
+ */
+
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
@@ -9,7 +15,6 @@ export class ValidationPipe implements PipeTransform<any> {
 			return value;
 		}
 		const object = plainToClass(metatype, value);
-		console.log(object);
 		const errors = await validate(object);
 		if (errors.length > 0) {
 			throw new BadRequestException('Validation failed');

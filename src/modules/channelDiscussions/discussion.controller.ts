@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Refactored the import of Discussions
+ * @description Added Custom Validation Pipe
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
-import { Controller, Post, Get, Put, Delete, Body, UseInterceptors, Param, UseFilters } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, UseInterceptors, Param, UseFilters, UsePipes } from '@nestjs/common';
 import { Discussions } from '../../database';
 import { DiscussionService } from './discussion.service';
 import { CreateDiscussionDto, UpdateDiscussionDto } from './dto';
@@ -18,6 +18,7 @@ import { UndefinedInterceptor } from '../../interceptors/undefined.interceptor';
 import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
+import { ValidationPipe } from '../../pipes/validation.pipe';
 
 // Controller for discussions
 @Controller('discussions')
@@ -51,10 +52,12 @@ export class DiscussionController {
 
 	// method to add a Discussion
 	@Post('add')
+	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
 	@UseFilters(new QueryFailedFilter())
 	async addDiscussion(@Body() DiscussionData: CreateDiscussionDto) {
+		console.log(DiscussionData);
 		const newDiscussion = Discussions.create({
 			title: DiscussionData.title,
 			content: DiscussionData.content,
@@ -69,6 +72,7 @@ export class DiscussionController {
 
 	// method to update it by id
 	@Put('update/:id')
+	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
 	@UseFilters(new QueryFailedFilter())

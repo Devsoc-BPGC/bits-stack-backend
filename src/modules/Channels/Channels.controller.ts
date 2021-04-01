@@ -46,7 +46,8 @@ export class ChannelsController {
 	@UseFilters(new QueryFailedFilter())
 	async addChannels(@Body() ChannelsData: CreateChannelsDto) {
 		const newChannel = Channels.create({
-			channel_Name: ChannelsData.channel_Name
+			channel_Name: ChannelsData.channel_Name,
+			channel_Mod: ChannelsData.channel_Mod
 		});
 		const Channel = await this.ChannelsService.createChannels(newChannel);
 		return Channel ? { Channel } : Channel;

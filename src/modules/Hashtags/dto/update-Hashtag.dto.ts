@@ -6,8 +6,10 @@
  */
 
 import { IsString, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 export class UpdateHashtagDto {
 	@IsOptional()
 	@IsString()
+	@ApiProperty()
 	tag_name!: string;
 }

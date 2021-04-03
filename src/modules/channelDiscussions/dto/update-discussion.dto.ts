@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Added Validation
+ * @description Documented through Swagger
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */

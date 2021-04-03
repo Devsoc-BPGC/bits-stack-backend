@@ -1,5 +1,5 @@
 /**
- * @description Added Custom Validation Pipe
+ * @description Documented through Swagger
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */

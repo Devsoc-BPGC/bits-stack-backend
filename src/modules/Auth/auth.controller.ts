@@ -1,12 +1,20 @@
+/**
+ * @description Documented the OK responses
+ *
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
+ */
+
 import { Controller, Get } from '@nestjs/common';
 import { google } from 'googleapis';
 import { ConfigService } from '../../shared/services/config.service';
 import { AuthService } from './auth.service';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
 	constructor(private configservice: ConfigService, private authservice: AuthService) {}
 
+	@ApiOkResponse({ description: 'Authentication done' })
 	@Get('google/oauth2')
 	async googleauth() {
 		const auth = await this.authservice.getauthenticatedClient(['profile', 'email']);

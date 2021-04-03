@@ -1,5 +1,5 @@
 /**
- * @description Created this custom validation pipe
+ * @description Updated the pipe to allow implicit conversion
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -14,7 +14,7 @@ export class ValidationPipe implements PipeTransform<any> {
 		if (!metatype || !this.toValidate(metatype)) {
 			return value;
 		}
-		const object = plainToClass(metatype, value);
+		const object = plainToClass(metatype, value, { enableImplicitConversion: true });
 		const errors = await validate(object);
 		if (errors.length > 0) {
 			throw new BadRequestException('Validation failed');

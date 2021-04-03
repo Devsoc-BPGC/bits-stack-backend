@@ -27,6 +27,7 @@
     "@nestjs/common": "^7.6.12",
     "@nestjs/core": "^7.6.12",
     "@nestjs/platform-express": "^7.6.12",
+    "@nestjs/swagger": "4.8.0",
     "@types/bluebird": "^3.5.33",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
@@ -49,6 +50,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.3",
     "server-destroy": "^1.0.1",
+    "swagger-ui-express": "4.1.6",
     "typeorm": "^0.2.31",
     "typeorm-transactional-cls-hooked": "^0.1.20",
     "winston": "^3.3.3"

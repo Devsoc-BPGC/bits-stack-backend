@@ -6,7 +6,7 @@
  */
 
 import { getCustomRepository } from 'typeorm';
-import { Channels } from '../../database/entity/Channels';
+import { Channels } from '../../database';
 import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { ChannelsRepository } from './Channels.repository';

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Added Custom Validation Pipe
+ * @description Documented the OK responses
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -19,6 +19,7 @@ import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { Timeout } from '../../decorators/timeout.decorator';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { ValidationPipe } from '../../pipes/validation.pipe';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 // Controller for discussions
 @Controller('discussions')
@@ -30,6 +31,7 @@ export class DiscussionController {
 	) {}
 
 	// method to get it by id
+	@ApiOkResponse({ description: 'Discussion fetch Successful' })
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -41,6 +43,7 @@ export class DiscussionController {
 	}
 
 	// method to get it by channel id
+	@ApiOkResponse({ description: 'Discussions fetch Successful' })
 	@Get('get/channel/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)
@@ -51,6 +54,7 @@ export class DiscussionController {
 	}
 
 	// method to add a Discussion
+	@ApiOkResponse({ description: 'Discussion added successfully' })
 	@Post('add')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -71,6 +75,7 @@ export class DiscussionController {
 	}
 
 	// method to update it by id
+	@ApiOkResponse({ description: 'Discussion updated successfully' })
 	@Put('update/:id')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -82,6 +87,7 @@ export class DiscussionController {
 	}
 
 	// method to delete it by id
+	@ApiOkResponse({ description: 'Discussion deleted successfully' })
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)

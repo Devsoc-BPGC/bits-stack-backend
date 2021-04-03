@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * Created Hashtag Controller
+ * @description Documented the OK responses
  *
- * @author Devesh
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
@@ -17,6 +17,7 @@ import { UndefinedInterceptor } from '../../interceptors/undefined.interceptor';
 import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { ValidationPipe } from '../../pipes/validation.pipe';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 // Controller for Hashtags
 @Controller('Hashtags')
@@ -28,6 +29,7 @@ export class HashtagController {
 	) {}
 
 	// method to get it by id
+	@ApiOkResponse({ description: 'Hashtag fetch Successful' })
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -39,6 +41,7 @@ export class HashtagController {
 	}
 
 	// method to add a Hashtag
+	@ApiOkResponse({ description: 'Hashtag added successfully' })
 	@Post('add')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -53,6 +56,7 @@ export class HashtagController {
 	}
 
 	// method to update it by id
+	@ApiOkResponse({ description: 'Hashtag updated successfully' })
 	@Put('update/:id')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -64,6 +68,7 @@ export class HashtagController {
 	}
 
 	// method to delete it by id
+	@ApiOkResponse({ description: 'Hashtag deleted successfully' })
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)

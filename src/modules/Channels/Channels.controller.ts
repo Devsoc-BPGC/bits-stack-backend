@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * Created Channels Controller
+ * @description Documented the OK responses
  *
- * @author Devesh
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
@@ -17,6 +17,7 @@ import { UndefinedInterceptor } from '../../interceptors/undefined.interceptor';
 import { CacheExpiration } from '../../decorators/cache-expiration.decorators';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { ValidationPipe } from '../../pipes/validation.pipe';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 // Controller for Channels
 @Controller('Channels')
@@ -28,6 +29,7 @@ export class ChannelsController {
 	) {}
 
 	// method to get it by id
+	@ApiOkResponse({ description: 'Channel fetch Successful' })
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -39,6 +41,7 @@ export class ChannelsController {
 	}
 
 	// method to add a Channel
+	@ApiOkResponse({ description: 'Channel added successfully' })
 	@Post('add')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -54,6 +57,7 @@ export class ChannelsController {
 	}
 
 	// method to update it by id
+	@ApiOkResponse({ description: 'Channel updated successfully' })
 	@Put('update/:id')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -65,6 +69,7 @@ export class ChannelsController {
 	}
 
 	// method to delete it by id
+	@ApiOkResponse({ description: 'Channel deleted successfully' })
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor, UndefinedInterceptor)

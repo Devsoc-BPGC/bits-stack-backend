@@ -1,14 +1,15 @@
 /**
- * @description Initialises Express Application
+ * @description Added Swagger Module
  *
- * @author Sarvesh Shinde <SarveshShinde64@gmail.com>
+ * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
 
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
-
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '../app.module';
+import fs from 'fs';
 
 export class ExpressLoader {
 	private readonly port: number;
@@ -24,7 +25,24 @@ export class ExpressLoader {
 		}) */
 		const port = this.port || 5000;
 		const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
-		app.listen(port, () => {
+
+		const config = new DocumentBuilder()
+			.setTitle('BITS-STACK Backend')
+			.setDescription('APIs for BITS-STACK')
+			.setVersion('1.0')
+			.build();
+		const document = SwaggerModule.createDocument(app, config);
+
+		const docJson = JSON.stringify(document);
+		fs.writeFile('docs.json', docJson, 'utf8', (err) => {
+			if (err) {
+				console.log(err);
+			}
+		});
+
+		SwaggerModule.setup('api', app, document);
+
+		await app.listen(port, () => {
 			console.log(`The server is listening on PORT:${port}`);
 		});
 	}

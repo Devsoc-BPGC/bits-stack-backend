@@ -1,5 +1,5 @@
 /**
- * @description Added Custom Validation Pipe
+ * @description Documented the OK responses
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -34,7 +34,7 @@ import { google } from 'googleapis';
 import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { Response } from 'express';
 import { ValidationPipe } from '../../pipes/validation.pipe';
-
+import { ApiOkResponse } from '@nestjs/swagger';
 @Controller('user')
 export class UserController {
 	constructor(
@@ -44,6 +44,7 @@ export class UserController {
 		private cache: RedisService
 	) {}
 
+	@ApiOkResponse({ description: 'User created successfully' })
 	@Post('create')
 	@UsePipes(ValidationPipe)
 	@CacheExpiration(15)
@@ -57,6 +58,7 @@ export class UserController {
 		});
 	}
 
+	@ApiOkResponse({ description: 'User updated successfully' })
 	@Post('update/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -69,6 +71,7 @@ export class UserController {
 		});
 	}
 
+	@ApiOkResponse({ description: 'User fetch Successful' })
 	@Get('get/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -80,6 +83,7 @@ export class UserController {
 		});
 	}
 
+	@ApiOkResponse({ description: 'User deleted successfully' })
 	@Delete('delete/:id')
 	@CacheExpiration(15)
 	@UseInterceptors(CacheInterceptor)
@@ -108,6 +112,7 @@ export class UserController {
 		return;
 	}
 
+	@ApiOkResponse({ description: 'Drive created successfully' })
 	@Get('drive/add')
 	async drivecreate() {
 		try {

@@ -9,6 +9,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '../app.module';
+import * as helmet from 'helmet';
 import fs from 'fs';
 
 export class ExpressLoader {
@@ -25,7 +26,9 @@ export class ExpressLoader {
 		}) */
 		const port = this.port || 5000;
 		const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
-
+		app.use(helmet.noSniff());
+		app.use(helmet.hidePoweredBy());
+		app.use(helmet.contentSecurityPolicy());
 		const config = new DocumentBuilder()
 			.setTitle('BITS-STACK Backend')
 			.setDescription('APIs for BITS-STACK')

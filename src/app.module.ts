@@ -15,13 +15,15 @@ import { ChannelsModule } from './modules/Channels/Channels.modules';
 import { DiscussionModule } from './modules/channelDiscussions/discussion.modules';
 import { UserModule } from './modules/User/user.modules';
 import { AnnouncementModule } from './modules/Announcements/announcement.modules';
-import { ServiceModule } from './shared/services.module';
+import { ServiceModule } from './shared/services/services.module';
+import { PaginationModule } from './shared/pagination/pagination.module';
 
 @Module({
 	imports: [
 		UserModule,
 		AuthModule,
 		ServiceModule,
+		PaginationModule,
 		AnnouncementModule,
 		DiscussionModule,
 		HashtagModule,

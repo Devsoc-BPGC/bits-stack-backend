@@ -10,6 +10,8 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { UserRepository } from './user.repository';
 import { RedisService } from '../../shared/services/redis.service';
+import { PaginationDto } from '../../shared/pagination/pagination.dto';
+import { PaginationService } from '../../shared/pagination/pagination.service';
 
 @Injectable()
 export class UserService {
@@ -27,7 +29,7 @@ export class UserService {
 		}
 	}
 
-	constructor(private readonly cache: RedisService) {
+	constructor(private readonly cache: RedisService, private paginationService: PaginationService) {
 		this.userRepo = getCustomRepository(UserRepository);
 	}
 
@@ -41,7 +43,7 @@ export class UserService {
 		try {
 			await this.findById(userID);
 		} catch (e) {
-			throw e;
+			return Promise.reject(e);
 		}
 		await this.userRepo.update(userID, user);
 		return await this.findById(userID);
@@ -54,6 +56,23 @@ export class UserService {
 		} catch (e) {
 			throw e;
 		}
+	}
+
+	@Transactional()
+	async getAllUser(paginationDto: PaginationDto) {
+		const totalCount = await this.userRepo.count();
+		const users = await this.userRepo
+			.createQueryBuilder()
+			.offset(this.paginationService.skippedItems(paginationDto))
+			.limit(paginationDto.limit)
+			.getMany();
+
+		return {
+			totalCount,
+			page: paginationDto.page,
+			limit: paginationDto.limit,
+			data: users
+		};
 	}
 
 	@Transactional()

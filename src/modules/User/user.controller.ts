@@ -18,7 +18,8 @@ import {
 	InternalServerErrorException,
 	UseFilters,
 	Delete,
-	UsePipes
+	UsePipes,
+	Query
 } from '@nestjs/common';
 import { Users } from '../../database';
 import { UserService } from './user.service';
@@ -35,6 +36,7 @@ import { QueryFailedFilter } from '../../filters/queryfailed.filter';
 import { Response } from 'express';
 import { ValidationPipe } from '../../pipes/validation.pipe';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { PaginationDto } from '../../shared/pagination/pagination.dto';
 @Controller('user')
 export class UserController {
 	constructor(
@@ -78,6 +80,23 @@ export class UserController {
 	@UseFilters(new QueryFailedFilter())
 	async getUser(@Param('id') userID: number, @Res() res: Response) {
 		const user = await this.UserService.getUser(userID);
+		return res.status(HttpStatus.OK).json({
+			user
+		});
+	}
+
+	@ApiOkResponse({ description: 'User fetch Successful' })
+	@Get('get')
+	@CacheExpiration(15)
+	@UseInterceptors(CacheInterceptor)
+	@UseFilters(new QueryFailedFilter())
+	async getAllUser(@Query() paginationDto: PaginationDto, @Res() res: Response) {
+		paginationDto.page = Number(paginationDto.page) || 1;
+		paginationDto.limit = Number(paginationDto.limit) || 10;
+		const user = await this.UserService.getAllUser({
+			...paginationDto,
+			limit: paginationDto.limit > 10 ? 10 : paginationDto.limit
+		});
 		return res.status(HttpStatus.OK).json({
 			user
 		});

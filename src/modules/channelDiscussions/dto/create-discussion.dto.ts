@@ -1,5 +1,5 @@
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -17,23 +17,8 @@ export class CreateDiscussionDto {
 	@ApiProperty()
 	content!: string;
 
-	@IsDefined()
-	@IsNumber()
-	@ApiProperty()
-	Channel_ID!: number;
-
 	@IsOptional()
 	@IsString()
 	@ApiPropertyOptional()
-	tags?: string;
-
-	@IsOptional()
-	@IsBoolean()
-	@ApiPropertyOptional()
-	isAnnouncement?: Boolean;
-
-	@IsOptional()
-	@IsString()
-	@ApiPropertyOptional()
-	files_image?: string;
+	files_link?: string;
 }

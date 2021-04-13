@@ -1,5 +1,5 @@
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -10,5 +10,5 @@ export class CreateHashtagDto {
 	@IsDefined()
 	@IsString()
 	@ApiProperty()
-	tag_name!: string;
+	name!: string;
 }

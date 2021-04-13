@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -11,5 +11,5 @@ export class UpdateHashtagDto {
 	@IsOptional()
 	@IsString()
 	@ApiProperty()
-	tag_name!: string;
+	name!: string;
 }

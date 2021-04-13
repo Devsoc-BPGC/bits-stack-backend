@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented the OK responses
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -65,10 +65,7 @@ export class DiscussionController {
 		const newDiscussion = Discussions.create({
 			title: DiscussionData.title,
 			content: DiscussionData.content,
-			Channel_ID: DiscussionData.Channel_ID,
-			tags: DiscussionData.tags,
-			isAnnouncement: DiscussionData.isAnnouncement || false,
-			files_image: DiscussionData.files_image
+			files_link: DiscussionData.files_link
 		});
 		const Discussion = await this.DiscussionService.createDiscussion(newDiscussion);
 		return Discussion ? { Discussion } : Discussion;

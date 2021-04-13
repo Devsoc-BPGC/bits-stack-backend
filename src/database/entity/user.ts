@@ -3,16 +3,16 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	Column,
-	JoinColumn,
-	JoinTable,
-	OneToOne,
 	CreateDateColumn,
 	UpdateDateColumn,
 	ManyToMany,
 	BaseEntity,
-	OneToMany,
-	DeleteDateColumn
+	DeleteDateColumn,
+	ManyToOne,
+	OneToMany
 } from 'typeorm';
+
+import { Discussions, Channels, Replies, Answers } from '../../database';
 
 export enum UserRole {
 	ULTRA_INSTINCT = 'ultra_instinct',
@@ -44,6 +44,9 @@ export class Users extends BaseEntity {
 	})
 	user_role?: UserRole;
 
+	@Column({ type: 'text', nullable: true, default: '' })
+	about?: string;
+
 	@CreateDateColumn()
 	created_at?: Date;
 
@@ -53,6 +56,18 @@ export class Users extends BaseEntity {
 	@DeleteDateColumn()
 	deleted_at?: Date;
 
-	@Column({ type: 'text', nullable: true, default: '' })
-	about?: string;
+	@OneToMany((type) => Channels, (channel) => channel.moderator)
+	moderated_channels?: Channels[];
+
+	@OneToMany((type) => Discussions, (discussion) => discussion.created_by)
+	discussions?: Discussions[];
+
+	@OneToMany((type) => Answers, (answer) => answer.user)
+	answers?: Answers[];
+
+	@OneToMany((type) => Replies, (reply) => reply.user)
+	replies?: Replies[];
+
+	@ManyToMany((type) => Channels, (channel) => channel.subscribers)
+	subscribed_channels?: Channels[];
 }

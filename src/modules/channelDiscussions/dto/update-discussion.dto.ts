@@ -21,5 +21,5 @@ export class UpdateDiscussionDto {
 	@IsOptional()
 	@IsString()
 	@ApiPropertyOptional()
-	files_image?: string;
+	files_link?: string;
 }

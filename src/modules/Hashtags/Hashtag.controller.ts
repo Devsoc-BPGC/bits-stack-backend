@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented the OK responses
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -49,7 +49,7 @@ export class HashtagController {
 	@UseFilters(new QueryFailedFilter())
 	async addHashtag(@Body() HashtagData: CreateHashtagDto) {
 		const newHashtag = Hashtags.create({
-			tag_name: HashtagData.tag_name
+			name: HashtagData.name
 		});
 		const Hashtag = await this.HashtagService.createHashtag(newHashtag);
 		return Hashtag ? { Hashtag } : Hashtag;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -11,10 +11,10 @@ export class UpdateChannelsDto {
 	@IsOptional()
 	@IsString()
 	@ApiPropertyOptional()
-	channel_Name!: string;
+	name?: string;
 
 	@IsOptional()
 	@IsString()
 	@ApiPropertyOptional()
-	channel_Mod!: string;
+	description?: string;
 }

@@ -11,7 +11,7 @@ import {
 	patchTypeORMRepositoryWithBaseRepository,
 	initializeTransactionalContext
 } from 'typeorm-transactional-cls-hooked';
-import { Channels, Discussions, Users, Hashtags } from '../database';
+import { Channels, Discussions, Users, Hashtags, Replies, Answers } from '../database';
 import { ConfigService } from '../shared/services/config.service';
 import { TypeOrmModuleOptions } from '../models/contracts/TypeOrmModuleOptions';
 
@@ -31,7 +31,7 @@ export class DatabaseLoader {
 			username: this.TypeOrmModuleOptions.username,
 			password: this.TypeOrmModuleOptions.password,
 			database: this.TypeOrmModuleOptions.database,
-			entities: [Users, Discussions, Channels, Hashtags],
+			entities: [Users, Discussions, Channels, Hashtags, Replies, Answers],
 			migrations: ['dist/database/migration/**/*.js'],
 			subscribers: ['dist/database/subscriber/**/*.js'],
 			cli: {

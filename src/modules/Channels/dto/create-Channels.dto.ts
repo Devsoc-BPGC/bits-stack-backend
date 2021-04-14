@@ -1,5 +1,5 @@
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -10,10 +10,10 @@ export class CreateChannelsDto {
 	@IsDefined()
 	@IsString()
 	@ApiProperty()
-	channel_Name!: string;
+	name!: string;
 
 	@IsDefined()
 	@IsString()
 	@ApiProperty()
-	channel_Mod!: string;
+	description!: string;
 }

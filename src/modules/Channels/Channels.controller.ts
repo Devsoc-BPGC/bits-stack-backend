@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented the OK responses
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -49,8 +49,8 @@ export class ChannelsController {
 	@UseFilters(new QueryFailedFilter())
 	async addChannels(@Body() ChannelsData: CreateChannelsDto) {
 		const newChannel = Channels.create({
-			channel_Name: ChannelsData.channel_Name,
-			channel_Mod: ChannelsData.channel_Mod
+			name: ChannelsData.name,
+			description: ChannelsData.description
 		});
 		const Channel = await this.ChannelsService.createChannels(newChannel);
 		return Channel ? { Channel } : Channel;

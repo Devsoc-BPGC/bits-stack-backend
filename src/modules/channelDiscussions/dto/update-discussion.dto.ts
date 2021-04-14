@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Documented through Swagger
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -19,22 +19,7 @@ export class UpdateDiscussionDto {
 	content!: string;
 
 	@IsOptional()
-	@IsNumber()
-	@ApiPropertyOptional()
-	Channel_ID!: number;
-
-	@IsOptional()
 	@IsString()
 	@ApiPropertyOptional()
-	tags?: string;
-
-	@IsOptional()
-	@IsBoolean()
-	@ApiPropertyOptional()
-	isAnnouncement?: Boolean;
-
-	@IsOptional()
-	@IsString()
-	@ApiPropertyOptional()
-	files_image?: string;
+	files_link?: string;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
- * @description Refactored the import of Discussions
+ * @description Updated the code after change in entities
  *
  * @author Shreyash <pandeyshreyash2201@gmail.com>
  */
@@ -28,9 +28,7 @@ export class DiscussionService {
 
 	@Transactional()
 	async findByChannel(Channel_ID: number): Promise<Discussions[] | undefined> {
-		return await this.DiscussionRepo.find({
-			Channel_ID: Channel_ID
-		});
+		return await this.DiscussionRepo.find({});
 	}
 
 	@Transactional()

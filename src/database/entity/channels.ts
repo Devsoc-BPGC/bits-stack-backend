@@ -4,7 +4,20 @@
  * @author Devesh
  */
 
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+	BaseEntity,
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	DeleteDateColumn,
+	UpdateDateColumn,
+	CreateDateColumn,
+	OneToMany,
+	ManyToOne,
+	ManyToMany,
+	JoinTable
+} from 'typeorm';
+import { Users, Discussions, Hashtags } from '../../database';
 
 @Entity({ name: 'channels' })
 export class Channels extends BaseEntity {
@@ -12,9 +25,30 @@ export class Channels extends BaseEntity {
 	id?: Number;
 
 	@Column({ type: 'varchar', unique: true })
-	channel_Name!: string;
+	name!: string;
 
-	@Column({ type: 'varchar', unique: true })
-	channel_Mod!: string;
-	// will make relations later for the abive with Userid
+	@Column({ type: 'varchar', nullable: true, default: '' })
+	description!: string;
+
+	@CreateDateColumn()
+	created_at?: Date;
+
+	@UpdateDateColumn()
+	updated_at?: Date;
+
+	@DeleteDateColumn()
+	deleted_at?: Date;
+
+	@ManyToOne((type) => Users, (user) => user.moderated_channels)
+	moderator?: Users;
+
+	@OneToMany((type) => Discussions, (discussion) => discussion.channel)
+	discussions?: Discussions[];
+
+	@OneToMany((type) => Hashtags, (hashtag) => hashtag.channel)
+	tags?: Discussions[];
+
+	@ManyToMany((type) => Users, (user) => user.subscribed_channels)
+	@JoinTable()
+	subscribers?: Users[];
 }
